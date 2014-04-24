@@ -50,7 +50,7 @@ public class PieceControl : MonoBehaviour {
 			}
 		}
 
-		if(Input.GetKeyDown("r"))
+		if(Input.GetKeyDown("r") || Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow))
 			Rotate(90);
 
 	}

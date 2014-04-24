@@ -44,9 +44,8 @@ public class PieceQueue : MonoBehaviour {
 			piecesToPlace.AddLast(instantiatedPiece);
 		}
 
-		buttonPos = new Rect(10, 10, 100, 25);
-		button2Pos = new Rect(10, 45, 100, 25);
-		infoPos = new Rect(120, 10, 40, 60);
+		buttonPos = new Rect(10, 10, 150, 25);
+		infoPos = new Rect(10, 45, 150, 25);
 	}
 
 	public void CreatePiece(){
@@ -59,7 +58,7 @@ public class PieceQueue : MonoBehaviour {
 
 		placedPieces.Push(newPiece);
 		newPiece.gameObject.AddComponent("PieceControl");
-		newPiece.position = spawnPoint;
+		newPiece.position = transform.TransformDirection(spawnPoint);
 		newPiece.localScale = new Vector3(1,1,1);
 		canCreate = false;
 	}
@@ -77,14 +76,14 @@ public class PieceQueue : MonoBehaviour {
 	}
 
 	void Update(){
-		if(Input.GetKeyDown("u")){
+		if(Input.GetKeyDown("z")){
 			UndoPiecePlacement();
 		}
 	}
 
 	void OnGUI(){
 		if(PiecesLeft > 0){
-			if((GUI.Button(buttonPos, "Place new piece") || Input.GetKeyDown("v")) && canCreate)
+			if((GUI.Button(buttonPos, "Place new piece") || Input.GetKeyDown("x")) && canCreate)
 				CreatePiece();
 		}else{
 			GUI.Box(buttonPos, "No more pieces");

@@ -6,6 +6,8 @@ public class ChangeSceneTrigger : MonoBehaviour {
 	public string nextScene;
 	public string tag;
 
+	bool endLevel = false;
+
 	void Start(){
 		Vector2 rotate = Vector2.up;
 		rotate = rotate.Rotate2D(90);
@@ -18,7 +20,11 @@ public class ChangeSceneTrigger : MonoBehaviour {
 	}
 
 	void ChangeScene(){
-		Application.LoadLevel(nextScene);
+		if(!endLevel){
+			Camera.main.gameObject.GetComponent<LevelTransition>().EndLevel(nextScene);
+			endLevel = true;
+		}
+		//Application.LoadLevel(nextScene);
 	}
 
 	void OnTriggerEnter(Collider other){

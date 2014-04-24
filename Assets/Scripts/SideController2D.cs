@@ -16,26 +16,32 @@ public class SideController2D : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		pieceQueue = GameObject.FindWithTag("Piece Queue").GetComponent<PieceQueue>();
+		GameObject go = GameObject.FindWithTag("Piece Queue");
+		if(go)
+			pieceQueue = go.GetComponent<PieceQueue>();
 		savedPositions = new Stack<Vector2>();
 		animator = GetComponent<Animator>();
 	}
 	
+	// Update is called once per frame
+	void Update () {
 
-	void Update(){
-		if(Input.GetKeyDown("v")){
+
+		if(Input.GetKeyDown("x")){
 			Debug.Log("saved pos");
 			savedPositions.Push((Vector2)transform.position);
 		}
-		if(Input.GetKeyDown("u")){
+		if(Input.GetKeyDown("z")){
 			Debug.Log("loaded pos");
 			transform.position = (Vector3)savedPositions.Pop();
 		}
-	}
-	// Update is called once per frame
-	void FixedUpdate () {
 
-		float h = pieceQueue.CanCreate ? Input.GetAxis("Horizontal") : 0.0f;
+		float h = 0;
+		if(pieceQueue)
+			h = pieceQueue.CanCreate ? Input.GetAxis("Horizontal") : 0.0f;
+		else
+			h = Input.GetAxis("Horizontal");
+
 		if(h > 0 && !facingRight)
 			facingRight = true;
 		else if(h < 0 && facingRight)
@@ -47,7 +53,7 @@ public class SideController2D : MonoBehaviour {
 		float v = rigidbody2D.velocity.y;
 
 		bool grounded = false;
-		if(Physics2D.OverlapCircle(transform.position, 0.2f, ~(1 << 8))){
+		if(Physics2D.OverlapCircle(transform.position, 0.3f, ~(1 << 8))){
 			grounded = true;
 			Debug.DrawRay(transform.position, Vector3.up * -0.2f);
 			Debug.DrawRay(transform.position, Vector3.right * 0.2f);
